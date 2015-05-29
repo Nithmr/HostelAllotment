@@ -51,6 +51,125 @@ $cakeDescription = __d('cake_dev', 'Online Hostel Allotment');
     
     
     <style>
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    top : 0px;
+    margin-left: -250px;
+    overflow: auto;
+    background: #000;
+    -webkit-transition: all 1.5s ease;
+    -moz-transition: all 1.5s ease;
+    -o-transition: all 1.5s ease;
+    transition: all 1.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: fixed;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0px;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
         .fillchoice0
         {
             display: none;
@@ -67,7 +186,8 @@ $cakeDescription = __d('cake_dev', 'Online Hostel Allotment');
    
 </head>
 <body>
-    
+   
+
   <?php
    if($isLogin && $admin==0)
            {?>
@@ -560,30 +680,45 @@ function redirect12($abc)
         window.location = $abc;
 }
 </script>
-    <div id="main">
-	             
-                    
-           <div id='top'>
-		
-                    <div id='top1'>
-			
-                    </div>
-                    <div id='top2'>
-                      
 
-                        <ul class='nav' style='margin-left:5%;  '>
-                              <li><a href='<?php echo $webdirurl ?>/menubar/about/index.html' >About</a></li>
-            <li><a href='<?php echo $webdirurl ?>/menubar/rules/rules.html' >Rules</a></li>
-            <li><a href='<?php echo $webdirurl ?>/menubar/faq/faq.html' >Faq</a></li>
-            <li><a href='#' >Gallery</a></li>
-                        </ul>
-                     
-                    </div>
-                </div>     
-                    <div id='aboutbelowwall'>
-                        <div id='loginmenudiv'>
-                            <ul class='nav'    >
-                      <?php  echo    "<li><a href='$base_url/admin/roomproperties?hostelname=none' >Room-properties</a></li>
+    <div id="main">
+	         <nav class="navbar navbar">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">NIT-Hamirpur</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        
+            <li><a href="<?php echo $webdirurl ?>/menubar/about/index.html" >About</a></li>
+            <li><a href="<?php echo $webdirurl ?>/menubar/rules/rules.html" >Rules</a></li>
+            <li><a href="<?php echo $webdirurl ?>/menubar/faq/faq.html" >Faq</a></li>
+            <li><a href="#" >Gallery</a></li>
+	<?php echo "<li><a href='$base_url/user/logout'>logout</a></li>" ?>
+</ul>
+ </div>
+  </div>
+</nav>    
+                  <div id="wrapper" >
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Administrator
+                    </a>
+                </li>
+                <?php  echo    "<li><a href='$base_url/admin/roomproperties?hostelname=none' >Room-properties</a></li>
                                 <li><a href='$base_url/admin/scheduling'>Scheduler</a></li>
                                 
                                 <li><a href='$base_url/admin/addremoverooms?hostelname=none'>rooms</a></li>
@@ -594,10 +729,14 @@ function redirect12($abc)
                                 <li><a href='$base_url/admin/editinfo'>editinfo</a></li>
                                 <li><a href='$base_url/admin/exportdata'>data</a></li>
                        <li><a href='$base_url/admin/validationpage'>validate</a></li>
-                                  <li><a href='$base_url/user/logout'>logout</a></li>
+                                  
                             </ul></div></div>";
                         
                      echo $this->fetch('content'); ?>
+            </ul>
+        </div> 
+  
+          
                           
                           
                                          
