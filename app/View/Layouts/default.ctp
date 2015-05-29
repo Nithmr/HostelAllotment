@@ -225,7 +225,7 @@
            {?>
     
 	<div id="main">
-		
+		<?php
                           echo "<ul class='nav'    >
                             <li><a href='$base_url/panel/index' >Home</a></li>
                                 <li><a href='$base_url/panel/viewinfo'>Studentinfo</a></li>
