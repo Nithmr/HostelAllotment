@@ -64,7 +64,7 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'root',
-		'password' => 'tango',
+		'password' => 'akarshit',
 		'database' => 'hostel',
 		'prefix' => '',
 		//'encoding' => 'utf8',
