@@ -1,0 +1,240 @@
+#vlb4overlay{
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:190;
+	width:100%;
+	height:auto;
+	background-color:#151410;
+}
+
+#vlb4lightbox{
+	position:absolute;
+	top:20px;
+	left:0;
+	width:100%;
+	z-index:200;
+	text-align:center;
+	color:#151410;
+	line-height:0;
+}
+#vlb4lightbox td{
+	vertical-align:top;
+}
+#vlb4lightbox a, #vlb4lightbox a:hover {
+	border-bottom:none;
+	color:#151410;
+	text-decoration:underline;
+}
+
+#vlb4lightbox a img{ border:none; }
+
+#vlb4outerImageContainer{
+	width:auto;
+	height:auto; /* without this line error in IE8 detected */
+	margin:0 auto;
+	position:relative;
+}
+
+#vlb4lightboxImage{
+	width:100%;
+	height:100%;
+}
+
+#vlb4imageContainerMain{
+	margin:0 auto;
+	overflow:visible;
+	position:relative;
+	font-size:0;/* ie fix - big info bar*/
+}
+
+#vlb4imageContainer{
+	width:10px;
+	height:10px;
+	margin:0 auto;
+	overflow:hidden;
+	background-color:#fff;
+	position:relative;
+	font-size:0;/* ie fix - big info bar*/
+}
+
+#vlb4loading{
+	position:absolute;
+	top:40%;
+	left:0%;
+	height:25%;
+	width:100%;
+	text-align:center;
+	font-size:10px;
+	z-index:1;
+}
+#vlb4loadingLink {
+	display:block;
+	margin:0 auto;
+	padding:0;
+	width:32px;
+	height:32px;
+	background:url(loading.gif) center center no-repeat;
+	text-indent:-9999px;
+}
+#vlb4hoverNav{
+	position:absolute;
+	top:0;
+	left:0;
+	height:100%;
+	width:100%;
+	z-index:10;
+}
+#vlb4imageContainer>#hoverNav{ left:0;}
+#vlb4prevLinkImg, #vlb4nextLinkImg{
+	top:0;
+	width:63px;
+	height:100%;
+	position:absolute;
+	z-index:20;
+	outline-style:none;
+	display:block;
+	text-indent:-9999px;
+	background:none;
+	}
+* html #vlb4prevLinkImg,* html #vlb4nextLinkImg{
+	background-image:url(data:image/gif;base64,AAAA); /* Trick IE into showing hover */
+}
+#vlb4prevLinkImg { left: 0; }
+#vlb4nextLinkImg { right: 0; }
+#vlb4prevLinkImg:hover, #vlb4prevLinkImg.hover, #vlb4prevLinkImg:visited:hover { 
+	background:url(prev.gif) left 14% no-repeat; 
+}
+#vlb4nextLinkImg:hover, #vlb4nextLinkImg.hover, #vlb4nextLinkImg:visited:hover { 
+	background:url(next.gif) right 14% no-repeat; 
+}
+
+
+#vlb4imageDataContainer{
+	font:10px Verdana, Helvetica, sans-serif;
+	background-color:#fff;
+	width:100%	;
+}
+
+#vlb4imageData{
+	overflow:hidden;
+	width:100%;
+}
+#vlb4imageDetails{ width:70%; float:left; text-align:left; 	padding:10px 10px 0 10px;}
+#vlb4caption{ font-weight:bold; display:block;}
+#vlb4numberDisplay{ display:block; float:left; padding-right:10px; margin-top:3px;}
+#vlb4detailsNav{display:block; float:left;   padding:0; }	
+#vlb4prevLinkDetails, #vlb4nextLinkDetails, #vlb4slideShowControl{ background-repeat:no-repeat; outline-style:none; display:block; float:left;}
+#vlb4prevLinkDetails { margin:3px; width:16px;height:16px; background:url(prevlabel.gif) left center;}
+#vlb4nextLinkDetails { margin:3px; width:16px;height:16px; background:url(nextlabel.gif) right center;}
+
+#vlb4slideShowControl.started{
+	background-image:url(pause.gif);
+}
+
+#vlb4slideShowControl{
+	display:block;
+	width:16px; 
+	height:16px; 
+	float:left;
+	margin:3px;
+	background:url(start.gif);
+	background-position:center center;
+	background-repeat:no-repeat;
+	}
+
+#vlb4close{
+	padding:10px 10px 0 0;
+	float:right;
+}
+#vlb4closeLink {
+	display:block; outline-style:none; margin:0; padding:0; text-decoration:none; 
+	width:66px;
+	height:32px;
+	background:url(close.gif) no-repeat;
+}	
+		
+	
+.clearfix:after { content:"."; display:block; height:0; clear:both; visibility:hidden;}
+* html>body .clearfix {display:inline-block; width:100%;}
+
+* html .clearfix {
+	/* Hides from IE-mac \*/
+	height:1%;
+	/* End hide from IE-mac */
+}	
+	
+
+#vlb4outerImageFrame{
+	border:solid 1px red;
+	height:100%;
+	width:100%;
+	position:absolute;
+}
+
+
+#vlb4outerImageContainer{
+	overflow:visible;
+}
+#vlb4outerImageContainer td{
+	text-align:center;
+	padding:0;
+}
+
+#vlb4lightboxFrameBody{
+	background-color:#fff;
+	border:solid 1px #fff; /* hack for opera table small cell width */
+}
+
+#vlb4outerImageContainer td, #vlb4outerImageContainer tr{
+	font-size:0;
+	border:0 none;
+}
+
+/* frame style */
+#vlb4outerImageContainer td.tl, #vlb4outerImageContainer td.br{
+	height:10px;
+	width:10px;
+}
+
+#vlb4outerImageContainer td.tl{
+	background-image:url(borderCorners.png);
+	_background-image:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='index_files/vlb_files4/borderCorners.png', sizingMethod='scale');
+}
+#vlb4outerImageContainer td.tc{
+	background-image:url(borderHoriz.png);
+	_background-image:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='index_files/vlb_files4/borderHoriz.png', sizingMethod='scale');
+}
+#vlb4outerImageContainer td.ml{
+	background-image:url(borderVert.png);
+	_background-image:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='index_files/vlb_files4/borderVert.png', sizingMethod='scale');
+}
+#vlb4outerImageContainer td.mr{
+	background-image:url(borderVert.png);
+	_background-image:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='index_files/vlb_files4/borderVert.png', sizingMethod='scale');
+}
+#vlb4outerImageContainer td.bc{
+	background-image:url(borderHoriz.png);
+	_background-image:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='index_files/vlb_files4/borderHoriz.png', sizingMethod='scale');
+}
+.vlb{display:none;}
+#vlb4outerImageContainer td.tr{
+	background-image:url(borderCorners.png);
+	_background-image:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='index_files/vlb_files4/borderCorners.png', sizingMethod='scale');
+}
+#vlb4outerImageContainer td.bl{
+	background-image:url(borderCorners.png);
+	_background-image:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='index_files/vlb_files4/borderCorners.png', sizingMethod='scale');
+}
+#vlb4outerImageContainer td.br{
+	background-image:url(borderCorners.png);
+	_background-image:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='index_files/vlb_files4/borderCorners.png', sizingMethod='scale');
+}

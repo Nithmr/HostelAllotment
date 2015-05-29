@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>Rules</title>
+		<link rel="stylesheet" type="text/css" href="mystyle.css" />
+	</head>
+	<body style="background-image:url(back.jpg)">
+		<div class="head" style="background-image:url(images/background/bg_main3.jpg); background-repeat:repeat-x;">
+			<div id="top2" >
+				<ul class="nav" style="margin-left:5%;">
+					<li><a href="http://172.16.31.240/" style="color:white; text-decoration:none;">Login</a></li>
+					<li><a href="/hostel/app/webroot/menubar/about/index.html" style="color:white;text-decoration:none;"  >About</a></li>
+					<li> <a href="/hostel/app/webroot/menubar/rules/rules.html" style="color:white; text-decoration:none;">Rules</a></li>
+					<li><a href="/hostel/app/webroot/menubar/faq/faq.html" style="color:white; text-decoration:none;">Faq</a></li>
+					<li><a href="#" style="color:white; text-decoration:none;">Gallery</a></li>
+				</ul>
+			</div>
+			<center>
+				<img src="images/header/dept.png" style="margin-top:50px;">
+			</center>
+		</div>
+		<br>
+		<div class="container">
+			<center>
+				<h1 style="padding-top:20px;">
+					RULES FOR ALLOTMENT:
+				</h1>
+				<ol class="content">
+					<li>
+						The hostel allocation process takes place in stages for various years thus the options will appear accordingly to the phases.
+						As for example the first phase was registration so only edit information and fill info tab was there, in the next phase of 
+						hostel allocation other tabs would be highlighted accordingly.
+						<br>
+						<br>
+					</li>
+					<li>
+						Now suppose you are eligible for singlet, doublet and triplets. The allocation process will start with singlet first then 
+						doublets and triplets.Now the students who desire singlet will fill their choices first. 
+						For example consider 50 singlet rooms, 25 doublet and 50 triplets and 500 students applying for it, the top 50 will be allotted
+						the singlet and rest of the students will participate further for doublets and triplets.
+						<br>
+						<br>
+						<span class="footnote">
+							Note: Whether you are a high ranker or low ranker you will only be allotted rooms if you fill choices otherwise you will be 
+							allotted randomly in the last phase.
+						</span>
+						<br>
+						<br>
+					</li>
+					<li>
+						For doublets and triplets (or rooms with more than 1 person capacity) a grouping scheme called 'Roommate Finder' is there and 
+						after grouping for doublets, choice filling will take place for doublets and after room allotment occurs then again grouping 
+						will be done by roommate finder for triplets and the choice filling for triplets will take place.
+						<br>
+						<br>
+					</li>
+					<li>
+						Roommate Finder: <br>
+						For doublet and triplets students will make groups according to capacity of the rooms for example for a doublet room a group 
+						of 2 students, for a triplet a group of 3 students. For making groups you will send and receive requests from other fellow 
+						students for grouping purpose.
+						Now after a group is formed all the students in the group can participate in room choice filling but further sending and
+						receiving requests in case of triplets will be handled by leader(one with higher pointer).
+						<br>
+						For example for a triplet if a group of 2 has been formed the one with higher pointer will handle further request.
+						<br>
+						<br>
+						For video assistance please follow:<br>
+						1. Roommate Finder Introduction: <a href="http://www.youtube.com/watch?v=v2cqR_zXP94">www.youtube.com/watch?v=v2cqR_zXP94</a><br>
+						2. Roommate Finder Stage I:  <a href="https://www.youtube.com/watch?v=oTXMNJ-X3uA">www.youtube.com/watch?v=oTXMNJ-X3uA</a><br>
+						3. Roommate Finder Stage II: <a href="https://www.youtube.com/watch?v=vsD8zl1AbAs">www.youtube.com/watch?v=vsD8zl1AbAs</a><br>
+						<br><br>
+					</li>
+					<li>
+						Choice Filling:<br>
+						Now the leader of the group will be responsible for filling room choices for the group. For example the 25 doublets will be
+						filled first and then again grouping for triplets will be done as per roommate finder and then the 50 triplets will be filled.
+						<br><br>
+						For video assistance please follow:<br>
+						1. FILL CHOICES using Graphical User Interface:<a href="https://www.youtube.com/watch?v=Ts61NI-iR2Q">www.youtube.com/watch?v=Ts61NI-iR2Q</a><br>
+						2. FILL CHOICES from List:<a href="https://www.youtube.com/watch?v=Q5sBvoDKFxQ">www.youtube.com/watch?v=Q5sBvoDKFxQ</a><br>
+
+					</li>
+				</ol>
+				<h1>
+				Algorithm for Allotment:<br>
+				</h1>
+				<ol class="content">
+					<li style="font:normal bold 15px sans-serif;">
+						Rank for Hostel Allocation:<br>
+						This will explain how we are calculating the ranks for hostel allocation.<br><br>
+						<ul style="font:normal normal 15px sans-serif">
+							<li>
+								Firstly every student of every branch is being scaled on a scale of 0 to 10 within their branch based on strength of the branch and
+								their respective ranks.<br>
+								For example we assign 10 to branch topper and 0 to lowest rank then scale all the other students between 0 and 10 by a difference 
+								calculated by dividing class strength by 10.<br><br>
+							</li>
+							<li>
+								After this process is completed for all the branches we have got all the students assigned with a number between 0 and 10, thus 
+								using this we combine and sort all the students in one unified list based on the number assigned to each student.<br><br>
+							</li>
+							<li>
+								Now for students sharing the same number we sort them by their CGPI.<br><br>
+							</li>
+							<li>
+								Now using this unified list we allot various hostels, priority being given to higher ranks.<br><br>
+							</li>
+						</ul>
+						<br>
+						<br>
+					</li>
+					<li style="font:normal bold 15px sans-serif;">
+						Grouping for Hostel Allocation:<br>
+						<ul style="font:normal normal 15px sans-serif">
+							<li>
+								Grouping has to be done for allotment of doublets, triplets and pent lets. For this we introduce 'Roommate Finder' 
+								application by which students are expected to form group according to the capacity of the rooms being allocated.
+							</li>
+						</ul>
+					</li>
+				</ol>
+				<div class="footnote">
+					IMPORTANT: This entire project is an undertaking of Department of Computer Science and Engineering and Department of Architecture 
+					and first of its kind where we aim to automate the entire hostel allocation process for convenience of both students and staff. 
+					This project is very strict for its timeline for grouping and room choice filling and once time for a particular phase has passed 
+					it cannot be repeated so please be aware about the procedure and spread the word as we do not want any student to miss.
+					<br><br>
+					To remain updated please follow <a href="http://www.facebook.com/hostelallocationnith" style="font-weight:bold;">www.facebook.com/hostelallocationnith</a>
+					<br>
+					For any query please mail us at <a href="hostel.nith@gmail.com" style="font-weight:bold;">hostel.nith@gmail.com</a>
+					<br>
+					For Video tutorials for allocation follow us at <a href="https://www.youtube.com/channel/UCqWQsRcyN8EiSz4KJeI_y8g" style="font-weight:bold;">www.youtube.com/channel/UCqWQsRcyN8EiSz4KJeI_y8g</a>
+					<br>
+					<br>	
+				<div>
+			</center>
+		</div>
+	</body>
+</html>

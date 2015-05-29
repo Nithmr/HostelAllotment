@@ -1,0 +1,51 @@
+div.head
+{
+	position:relative;
+	z-index:1;
+	margin-top:0%;
+	width:100%;
+	height:271px;
+}
+
+div#top2
+{
+	margin-left:70%;
+	padding-top:1%;
+}
+ul.nav li
+{
+	padding-left:10px;
+	display:inline;
+}
+
+div.container
+{
+	position:relative;
+	outline:solid thin black;
+	width:1000px;
+	margin-top:-35px;
+	margin-right: auto;
+	margin-bottom: auto;
+	margin-left: auto;
+}
+
+ol.content
+{
+	width:700px;
+	padding:15px;
+	font:normal normal 15px sans-serif;
+	text-align:left;
+}
+
+div.footnote
+{
+	width:820px;
+	text-align:left;
+	font:italic normal 15px georgia,sans-serif;
+}
+span.footnote
+{
+	width:820px;
+	text-align:left;
+	font:italic normal 15px georgia,sans-serif;
+}

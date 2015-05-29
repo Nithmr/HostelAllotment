@@ -1,0 +1,825 @@
+<?php
+App::uses('Sanitize', 'Utility');
+class AdminController extends AppController
+{
+   var $name =  'Admin';
+ 
+   var $uses = array( 'Panel');
+     function beforeFilter() {
+        parent::beforeFilter();
+      
+        if($this->isLogin && $this->admin==1)
+        {
+            
+        }
+        else
+        {
+          $this->redirect(BASE_URL . '/user/login');
+        }
+    }
+    function index()
+    {
+        
+    }
+    function roomproperties()
+    {
+        $genderlist[0]='male';
+        $genderlist[1]='female';
+        $result=$this->Panel->hostel();
+        $this->set('hostellist',$result);
+        $getdata = $this->params->query;
+        $img = $getdata['hostelname'];
+        $this->set('hostelname',$img);
+        $result=$this->Panel->pickinfoforuser('course');
+        $this->set('courselist',$result);
+        $result=$this->Panel->pickinfoforuser('year');
+        $this->set('yearlist',$result);
+        $this->set('genderlist',$genderlist);
+        if(isset ($getdata['ok']))
+        {
+        $year = $getdata['year'];
+        $course = $getdata['course'];
+        $gender = $getdata['gender'];
+        $capacity = $getdata['capacity'];
+        $this->set('capacity',$capacity);
+        $this->set('gender',$gender);
+        $this->set('year',$year);
+        $this->set('course',$course);
+          $key=array_keys($getdata);
+          $i=0;
+            foreach($key as $data)
+            {
+                $i++;
+                if($i<=5 || $i==count($key))
+                    continue;
+                else
+                    $this->Panel->adddataintoroomre($data,$year,$capacity,$course,$gender);
+            }
+         }
+         else if(count($getdata)>1)
+         {
+              $year = $getdata['year'];
+        $course = $getdata['course'];
+        $gender = $getdata['gender'];
+        $capacity = $getdata['capacity'];
+        $this->set('capacity',$capacity);
+        $this->set('gender',$gender);
+        $this->set('year',$year);
+        $this->set('course',$course);
+             $a=array_keys($getdata);
+             $this->Panel->editaroom($a[count($getdata)-1]);
+         }
+         $result=$this->Panel->room($img);
+        $this->set('roomno',$result);
+        $result=$this->Panel->notroom($img);
+        $this->set('notroomno',$result);
+    
+    }
+    
+    function edit_room()
+    {
+         $getdata = $this->params->query;
+         $img = $getdata['hostelname'];
+         $this->Panel->editroom($img);
+         $temp=BASE_URL . "/admin/roomproperties?hostelname=$img";
+         $this->redirect($temp);
+    }
+    function timetable()
+    {
+        $data = $this->Panel->timetable();
+        
+        $this->set('timetabledata', $data);
+    }
+
+    
+    function formfillpermission()
+    {
+        $getdata = $this->request;
+        if(isset($getdata['data']['set']) && !empty($getdata['data']['rollno']))
+        {
+            if($getdata['data']['set']=='ON')
+            {
+                $this->Panel->formfillpermissionon($getdata['data']['rollno']);
+            }
+            else if($getdata['data']['set']=='OFF')
+            {
+                $this->Panel->formfillpermissionoff($getdata['data']['rollno']);
+            }
+        }
+        $data=$this->Panel->alluser();
+        $this->set('alluser', $data);
+    }
+    
+      function addinformation()
+    {
+        $getdata = $this->request;
+        if(isset($getdata->query['link']) || isset($getdata['data']['link']))
+        {
+             if(isset($getdata->query['link']))
+            $getlink=$getdata->query['link'];
+             else if(isset($getdata['data']['link']))
+                 $getlink=$getdata['data']['link'];
+             if($getlink=='hostel-block')
+             {
+                 $result= $this->Panel->pickinfoforuser('hostel');
+                 $this->set('hostellist', $result);
+             }
+             else if($getlink=='year' || $getlink=='department')
+             {
+                 $result= $this->Panel->pickinfoforuser('course');
+                 $this->set('courselist', $result);
+                 }
+            if(isset($getdata['data']['set']))
+            {
+                if($getdata['data']['set']=='remove')
+                {
+                     $this->Panel->deleteadmintable($getdata['data']['selecteditem'][0],$getlink);
+                }
+                else if(!empty($getdata['data']['textfield']))
+                    {
+                        if($getlink== 'hostel-block')
+                        $temp=$getdata['data']['hostellist']."-".$getdata['data']['textfield'];
+                        else if($getlink == 'year' ||$getlink == 'department')
+                            $temp=$getdata['data']['course']."#".$getdata['data']['textfield'];
+                        else
+                            $temp=$getdata['data']['textfield'];
+                        $this->Panel->addintoadmintable(strtoupper($temp),$getlink);      
+                     }
+            }
+               $data = $this->Panel->pickinfoforuser($getlink);
+             $this->set('col1list', $data);
+             $this->set('selectedlink',$getlink); 
+            
+        }
+    }
+
+    
+     public function editinfo()
+    {
+        $this->data = Sanitize::clean($this->data, array('encode' => false));
+           
+        $userinfo = $this->Session->read('user');
+        $data = $this->data;
+        if(isset ($data)&&!empty($data))
+        {
+            $username = $userinfo['username'];
+            $password = $data['oldpassword'];
+           $query = "select username from users where username='$username' and password='$password'";
+           $result = $this->Panel->query($query);
+           
+           if(!empty ($result))
+           {
+            if($data['newpassword']==$data['repassword']&&!empty($data['newpassword']))
+            {
+                $newpass = $data['newpassword'];
+                $query = "update users set password='$newpass' where username='$username' and password ='$password'";
+                $result = $this->Panel->query($query);
+             
+                    $this->Session->setFlash('Password updated successfully', 'default', array('class' => 'success_message'));
+                        }
+            else
+            {
+                 $this->Session->setFlash('Password did not match or password is empty', 'default', array('class' => 'error_message'));
+
+            }
+           }
+           else
+           {
+            $this->Session->setFlash('wrong password', 'default', array('class' => 'error_message'));
+
+           }
+        }
+        
+        $this->set('userinfo',$userinfo);
+    }
+    
+   
+    function exportdata()
+    {
+        //$this->Panel->randomalgo('B-TECH','1','male','2');
+        //$this->Panel->normalize();
+       // exit();
+  
+         $result =  $this->Panel->pickinfoforuser('course');
+                 $this->set('courselist',$result);
+                  $result =  $this->Panel->pickinfoforuser('year');
+                          $this->set('yearlist',$result);
+                  $result =  $this->Panel->pickinfoforuser('department');
+                          $this->set('departmentlist',$result);
+                  $result =  $this->Panel->pickinfoforuser('hostel');
+                          $this->set('hostellist',$result);
+                          $getdata = $this->request;
+                          if(isset($getdata['data']['export']))
+                          {
+                              $data=$getdata['data'];
+                              
+                              $data = $this->Panel->exportdata($data);
+                              	$filename = "export_".date("Y.m.d").".csv";
+$csv_file = fopen('php://output', 'w');
+ 
+header('Content-type: application/csv');
+header('Content-Disposition: attachment; filename="'.$filename.'"');
+	
+        $header_row=array_keys($data[0][0]);
+        
+fputcsv($csv_file,$header_row,',','"');
+ foreach($data as $result)
+{
+// Array indexes correspond to the field names in your db table(s)
+$row = array_values($result[0]);
+ 
+fputcsv($csv_file,$row,',','"');
+}
+ 
+fclose($csv_file);     
+                          
+                            
+                            
+                            
+                              exit;
+                          }
+    }
+     function search()
+    {
+        $getdata = $this->request;
+          if(!isset($getdata->query['pageno']))
+                $pageno=1;
+        else
+        {
+            $pageno=$getdata->query['pageno'];
+        }
+        if(isset ($getdata->query['textfield']))
+        {    
+            //$getdata->query['textfield']="";
+            $capacity=30;
+            $name = $this->Session->read('user');
+            $name = $name['username'];
+            $result =  $this->Panel->adminsearch($getdata->query['textfield'],$capacity,$getdata->query['searchfield']);
+            $this->set('textfieldval',$getdata->query['textfield']);
+              $this->set('searchfieldval',$getdata->query['searchfield']);
+             if($result['totalpage']!=0)
+             {
+                  $this->set('valuserlist',$result[$pageno-1]);
+                   $this->set('noofpages',$result['totalpage']);
+                   $this->set('currentpage',$pageno);
+              }
+               else {
+                     $this->set('valuserlist',"");
+                      $this->set('noofpages',0);
+                      $this->set('currentpage',1);
+                      }
+                      
+         }
+         else
+         {
+                      $this->set('valuserlist',"");
+                      $this->set('noofpages',0);
+                      $this->set('textfieldval',"");
+                      $this->set('searchfieldval',"");
+                      $this->set('currentpage',1);
+         }
+    }
+    function viewinformation()
+    {
+        
+        $getdata = $this->request;
+        if(isset($getdata->query['search']))
+        {
+           $text=$getdata->query['textfield'];
+           $search=$getdata->query['searchfield'];
+           $page=$getdata->query['pageno'];
+        }
+        else if(isset($getdata->query['vtype']))
+        {
+            $page=$getdata->query['pageno'];
+            $vtype=$getdata->query['vtype'];
+        }    
+        else
+        {
+           $text="";
+           $search="";
+           $page=1;            
+        }
+        if(!isset($getdata->query['rollno']))
+        {
+             $this->set('setinfo','true');
+        }
+        else
+        {
+            $username = $getdata->query['rollno'];
+        
+        $query = "select * from users where rollno ='$username'";
+        $result1 = $this->Panel->query($query);
+        
+        $query="select * from imageupload where rollno='$username'";
+         $result = $this->Panel->query($query);
+         if(isset($result[0]['imageupload']['imageadd']))
+                    $this->set('imagedata',$result);
+                else 
+                {
+                    $result[0]['imageupload']['imageadd']="thumbnail.jpg";
+                  $this->set('imagedata',$result);
+                }
+                $userdata=$result1[0]['users'];
+                if(empty($result1[0]['users']['name']))
+                $userdata['name']="`";
+                if(empty($result1[0]['users']['mothername']))
+                $userdata['mothername']="`";
+                if(empty($result1[0]['users']['pincode']))
+                    $userdata['pincode']="` ";
+                if(empty($result1[0]['users']['permanentadd']) || $result1[0]['users']['permanentadd']==" ")
+                    $userdata['permanentadd']="` ";
+                if(empty($result1[0]['users']['mobileno']))
+                    $userdata['mobileno']="` ";
+                if(empty($result1[0]['users']['email']))
+                    $userdata['email']="`";
+                if(empty($result1[0]['users']['bloodgroup']))
+                    $userdata['bloodgroup']="` ";
+                if(empty($result1[0]['users']['department']))
+                    $userdata['department']="` ";
+                if(($result1[0]['users']['dob']) == "0000-00-00")
+                    $userdata['dob']=" `";
+                if(empty($result1[0]['users']['fathername']))
+                    $userdata['fathername']="` ";
+                if(empty($result1[0]['users']['category']))
+                    $userdata['category']=" `";
+                if(empty($result1[0]['users']['course']))
+                    $userdata['course']=" `";
+                if(($result1[0]['users']['year'])== 0)
+                    $userdata['year']=" `";
+                if(empty($result1[0]['users']['gender']))
+                    $userdata['gender']="` ";
+                if(empty($result1[0]['users']['fathermobileno']))
+                $userdata['fathermobileno']="`";
+                if(empty($result1[0]['users']['motheroccupation']))
+                $userdata['motheroccupation']="`";
+                if(empty($result1[0]['users']['fatheroccupation']))
+                $userdata['fatheroccupation']="`";
+                 if(empty($result1[0]['users']['comment']))
+                $userdata['comment']="`";
+                    $userdata['rollno']=$result1[0]['users']['rollno'];
+                     $this->set('userdata',$userdata);
+               
+    }
+    $this->set('page',$page);
+    if(isset($getdata->query['vtype']))
+    $this->set('vtype',$vtype);
+    else
+        {
+        $this->set('text',$text);
+    $this->set('search',$search);
+    }
+        
+    }
+    
+    
+    
+    
+    function exchangerooms()
+    {
+         $result=$this->Panel->pickinfoforuser('hostel');
+         $this->set('hostellist',$result);
+          $getdata = $this->request;
+          if(isset($getdata['data']['database']))
+              $database=$getdata['data']['database'];
+          else
+              $database='olduserdataofrooms';
+          $this->set('database',$database);
+          if(isset ($getdata->query['hostelname']))
+          $img = $getdata->query['hostelname'];
+           else
+               $img="none";
+           if(isset($getdata['data']['set']))
+           {
+               if($getdata['data']['set']=='remove' && !empty($getdata['data']['rollno']))
+               {
+                   $this->Panel->removedatafromoldtable($getdata['data']['rollno'],$database);
+               }
+               else if($getdata['data']['set']=="add>>" && !empty($getdata['data']['rollno']) && !empty($getdata['data']['roomno']))
+               {
+                   $this->Panel->addintooldtable($getdata['data']['rollno'],$getdata['data']['roomno'],$database);
+               }
+           }
+           if($img!='none')
+           {
+             $result=  $this->Panel->adminroomcapacity($img,$database);
+         $this->set('roomsentry',$result);
+         $result=  $this->Panel->adminroom($img,$database);
+         $this->set('adminroomslist',$result);
+           }
+           $result=$this->Panel->adminalluser($database);
+           $this->set('userlist',$result);
+         $this->set('hostelname',$img);
+    }
+    function scheduling()
+    {
+        $getdata = $this->params->query;
+         if(isset($getdata['date']))
+         {
+        $date=$getdata['date'];
+        $time=$getdata['time'];
+        $eventtime=$getdata['gap'];
+        $this->Panel->scheduler($date,$time,$eventtime);
+         }
+    }
+    function addremoverooms()
+    {
+        
+          $result=$this->Panel->pickinfoforuser('hostel-block');
+        $this->set('blocklist',$result);
+        $result=$this->Panel->pickinfoforuser('hostel');
+        $this->set('hostellist',$result);
+        $getdata = $this->request;
+        $img = $getdata->query['hostelname'];
+        
+        if(isset ($getdata['data']['set']))
+        {
+            if($getdata['data']['set']=='remove')
+            {
+                $this->Panel->removeroom($getdata['data']['roomlist']);
+                $img = $getdata['data']['hostelname'];
+            }
+            
+            else  if($getdata['data']['set']=='addroom')
+            {
+                $img=$getdata['data']['blocklist'];
+                $this->set('selectblock',$img);
+                $img=$getdata['data']['hostellist'];
+                if(!empty ($getdata['data']['roomno_add']))
+                $this->Panel->insertroom($getdata['data']['roomno_add'],$getdata['data']['blocklist'],$getdata['data']['hostellist']);
+            }
+        }
+        
+        $this->set('hostelname',$img);
+        $result=$this->Panel->displayaalroom($img);
+      
+        $this->set('allroom', $result);
+    }
+    function addremoveusers()
+    {
+         $result=$this->Panel->pickinfoforuser('hostel');
+        $this->set('hostellist',$result);
+        $getdata = $this->request;
+        if(isset($getdata->query['link']) || isset($getdata['data']['link']))
+        {
+             if(isset($getdata->query['link']))
+            $getlink=$getdata->query['link'];
+             else if(isset($getdata['data']['link']))
+                 $getlink=$getdata['data']['link'];
+              
+            if(isset($getdata['data']['set']))
+            {
+                if($getdata['data']['set']=='remove')
+                {
+                      $this->Panel->deleteuser($getdata['data']['selecteditem'][0]);
+                }
+                else if($getdata['data']['set']=='add' && !empty ($getdata['data']['textfield']))
+                {
+                        if($getlink== 'mmca')
+                        {
+                              $this->Panel->adduser($getdata['data']['textfield'],2,$getdata['data']['hostel']);
+                           
+                        }
+                        else if($getlink== 'user')
+                        {
+                            $this->Panel->adduser($getdata['data']['textfield'],0,"123");
+                        
+                        }      
+                     }
+            }
+             if($getlink== 'mmca')
+                   $userlist = $this->Panel->userlist(2);
+                    else if($getlink== 'user')
+                        $userlist = $this->Panel->userlist(0);
+                $this->set('userlist',$userlist); 
+                 $this->set('selectedlink',$getlink); 
+            
+        }
+    }
+    
+     public function filluserinfo()
+       {
+                $flag=true; 
+                $getdata = $this->data;
+                $parameter=  $this->request->query;
+                $name = $this->request->query['rollno'];
+                    $this->set('roll__no',$name);
+                 if(isset($parameter['vtype']))
+                 {
+                        $vtype=$parameter['vtype'];
+                        $page=$parameter['pageno'];
+                        $this->set('vtype',$parameter['vtype']);
+                        $this->set('pageno',$parameter['pageno']);
+                        $urle="$this->baseurl/admin/viewinformation?vtype=$vtype&pageno=$page&rollno=$name";
+                 }
+                 else if(isset($parameter['textfield']))
+                 {
+                        $page=$parameter['pageno'];
+                        $text=$parameter['textfield'];
+                        $search=$parameter['searchfield'];
+                        $this->set('pageno',$parameter['pageno']);
+                        $this->set('text',$parameter['textfield']);
+                        $this->set('search',$parameter['searchfield']);
+                        $urle="$this->baseurl/admin/viewinformation?pageno=$page&search=search&textfield=$text&searchfield=$search&rollno=$name";
+                 }
+                
+                $data=$this->Panel->pickinfoforuser("year");
+                $this->set('yearlist',$data);
+                $data=$this->Panel->pickinfoforuser("course");
+                $this->set('courselist',$data);
+                $data=$this->Panel->pickinfoforuser("department");
+                $this->set('departmentlist',$data);
+             
+                $data=$this->Panel->pickinfoforuser("category");
+                $this->set('categorylist',$data);
+                $query="select * from imageupload where rollno='$name'";
+                $temp=$this->Panel->query($query);
+                if(isset($temp[0]['imageupload']['imageadd']))
+                    $this->set('imageaddress',$temp[0]['imageupload']['imageadd']);
+                else 
+                  $this->set('imageaddress',"thumbnail.jpg");
+                $query="select * from users where rollno='$name'";
+                $resultid=$this->Panel->query($query);
+                if(isset($resultid[0]['users']['rollno']))
+                {
+                    
+                    
+                    $this->set('user_name',$resultid[0]['users']['name']);
+                    
+                    $this->set('user_course',$resultid[0]['users']['course']);
+                    
+                    $this->set('user_year',$resultid[0]['users']['year']);
+                    
+                    $this->set('user_gender',$resultid[0]['users']['gender']);
+                    
+                    $this->set('user_category',$resultid[0]['users']['category']);
+                    
+                    $this->set('user_fathername',$resultid[0]['users']['fathername']);
+                    
+                    $this->set('user_dob',$resultid[0]['users']['dob']);
+                    
+                    $this->set('user_department',$resultid[0]['users']['department']);
+                    
+                    $this->set('user_cgpi',$resultid[0]['users']['cgpi']);
+                    
+                    $this->set('user_bloodgroup',$resultid[0]['users']['bloodgroup']);
+                  
+                    $this->set('user_email',$resultid[0]['users']['email']);
+                  
+                    $this->set('user_mobileno',$resultid[0]['users']['mobileno']);
+                  
+                    $this->set('user_permanentadd',$resultid[0]['users']['permanentadd']);
+                  
+                    $this->set('user_pincode',$resultid[0]['users']['pincode']);
+                    
+                    
+                     $this->set('user_mothername',$resultid[0]['users']['mothername']);
+                     
+                      $this->set('user_fatheroccupation',$resultid[0]['users']['fatheroccupation']);
+                      
+                       $this->set('user_motheroccupation',$resultid[0]['users']['motheroccupation']);
+                       
+                        $this->set('user_fathermobileno',$resultid[0]['users']['fathermobileno']);
+                        
+                         $this->set('user_ph',$resultid[0]['users']['ph']);
+                         $this->set('user_comment',$resultid[0]['users']['comment']);
+                    
+                }
+                else
+                {
+                    $this->set('user_comment',"");
+                    $this->set('user_name',"");
+                    $this->set('user_pincode',"");
+                    $this->set('user_permanentadd',"");
+                    $this->set('user_mobileno',"");
+                    $this->set('user_email',"");
+                    $this->set('user_bloodgroup',"");
+                    $this->set('user_cgpi',"");
+                       $this->set('user_department',"");
+                    $this->set('user_dob',"");
+                    $this->set('user_fathername',"");
+                    $this->set('user_category',"");
+                    $this->set('user_course',"");
+                    $this->set('user_year',"");
+                    $this->set('user_gender',"");
+                     
+                      $this->set('user_mothername',"");
+                     
+                      $this->set('user_fatheroccupation',"");
+                      
+                       $this->set('user_motheroccupation',"");
+                       
+                        $this->set('user_fathermobileno',"");
+                        
+                         $this->set('user_ph',"0");
+                }
+                
+                if(isset($getdata['name']))
+                {
+                    
+                   if(!preg_match("{^[A-Za-z ]*$}",$getdata['name']))
+                    {
+                        $flag=false;
+                        echo "name field should not be empty and contains only alphabate charecters (A-Za-z)";
+                    }
+                    else if(!filter_var($getdata['email'],FILTER_VALIDATE_EMAIL))
+                    {
+                        $flag=false;
+                        if(empty($getdata['email']))
+                            $flag=true;
+                        else
+                        echo "enter email is invalid";
+                    }
+                    else if(!preg_match("{^[A-Za-z ]*$}",$getdata['fathername']))
+                    {
+                        $flag=false;
+                        echo "name field should not be empty and contains only alphabate charecters (A-Za-z)";
+                    }
+                  
+                    else if((strlen ($getdata['mobileno'])!=10 || !ctype_digit($getdata['mobileno'])))
+                    {
+                        $flag=false;
+                          if(empty($getdata['email']))
+                            $flag=true;
+                        else
+                        echo "enter mobile no is wrong";
+                    }
+                    else if((strlen ($getdata['pincode'])!=6 || !ctype_digit($getdata['pincode'])))
+                    {
+                        $flag=false;
+                          if(empty($getdata['email']))
+                            $flag=true;
+                        else
+                        echo "enter pincode is wrong";
+                    }
+               
+                      
+                     else if(!preg_match("{^[0-9]\.[0-9][0-9]|10.00|^$$}",$getdata['cgpi']))
+                    {
+                        $flag=false;
+                        echo "please enter ur cgpi like 8.00 or 7.95";
+                    }
+                    
+                    
+                    
+                if($flag)
+                {
+ 
+                   
+                    $name = $parameter['rollno'];
+             
+                    {
+                        if(!isset($getdata['ph']))
+                            $getdata['ph']=0;
+                        $query="UPDATE `users` SET `rollno`='$name',`comment`='$getdata[comment]',`name`='$getdata[name]',`course`='$getdata[course]',`year`='$getdata[year]',`gender`='$getdata[gender]',`category`='$getdata[category]',`fathername`='$getdata[fathername]',`dob`='$getdata[dob]',`department`='$getdata[department]',`cgpi`='$getdata[cgpi]',`bloodgroup`='$getdata[bloodgroup]',`email`='$getdata[email]',`mobileno`='$getdata[mobileno]',`permanentadd`='$getdata[address]',`pincode`='$getdata[pincode]',`mothername`='$getdata[mothername]',`fathermobileno`='$getdata[fathermobileno]',`fatheroccupation`='$getdata[fatheroccupation]',`motheroccupation`='$getdata[motheroccupation]',`ph`='$getdata[ph]' WHERE rollno='$name'";
+                    
+                        
+                    }
+                    
+                    
+                    $this->Panel->query($query);
+                    echo "<script> alert('successfully submitted'); window.location = '$urle'; </script>";
+                }
+                
+                }
+            
+       }
+
+    
+    
+    function validation()
+    {
+        $getdata = $this->request;
+        $validate = $getdata->query['validate'];
+        $rollno = $getdata->query['rollno']; 
+        $a=$getdata->query['pageno'];
+        if(isset($getdata->query['textfield']))
+        {
+        $b=$getdata->query['textfield'];
+        $c=$getdata->query['searchfield'];
+        $url=BASE_URL."/admin/search?pageno=$a&search=search&textfield=$b&searchfield=$c";
+        }
+        else if(isset($getdata->query['vtype']))
+        {
+            $d=$getdata->query['vtype'];
+            $url=BASE_URL."/admin/validationpage?pageno=$a&vtype=$d";
+        }
+        $this->Panel->validationofuser($rollno,$validate);
+        $this->redirect($url);
+    }
+    function validationpage()
+    {
+         $capacity=30;
+         $getdata = $this->request;
+         if(isset($getdata->query['pageno']))
+                 $page=$getdata->query['pageno'];
+             else {
+               $page=1;  
+             }       
+         if(isset($getdata->query['vtype']))
+         {
+             $this->set('vtype',$getdata->query['vtype']);
+             $value=$getdata->query['vtype'];
+         }
+         else
+         {
+             $value=3;
+         $this->set('vtype',3);
+         }
+         $result=$this->Panel->validationpage($value,$capacity);
+         if($result['totalpage']==0)
+             $result[0]=0;
+         $this->set('valuserlist',$result[$page-1]);
+         $this->set('noofpages',$result['totalpage']);
+         $this->set('currentpage',$page);
+    }
+
+    
+    function copytogroup()
+    {
+        $getdata = $this->request;
+        if(isset($getdata['data']['action'])&&isset($getdata['data']['sm']))
+        $this->Panel->deletegrouplist($getdata['data']);
+        if(isset($getdata['data']['action2'])&&isset($getdata['data']['su']))
+        $this->Panel->addintogroup($getdata['data']);
+        $result=$this->Panel->eligibleuserlist();
+         $this->set('userdatalist',$result);
+        $result=$this->Panel->studentgrouplist();
+         $this->set('groupdatalist',$result);
+         
+    }
+    
+    
+    function copynewtoold()
+    {
+         $getdata = $this->request;
+        
+        
+         if(isset($getdata->query['normalize']))
+         if($getdata->query['normalize']=="normalize")
+         { $this->Panel->normalize();
+         }
+         if(isset($getdata->query['newtoold']))
+         if($getdata->query['newtoold']=="newtoold")
+         {
+              $query="select * from newuserdataofrooms";
+             $result=$this->Panel->query($query);
+             if(!empty($result))
+             {
+             $query="select * from olduserdataofrooms";
+             $result=$this->Panel->query($query);
+            
+              $csv_file = fopen('php://output', 'w');
+$filename = "export_".date("Y.m.d").".csv";
+header('Content-type: application/csv');
+header('Content-Disposition: attachment; filename="'.$filename.'"');
+	
+       
+ foreach($result as $data)
+{
+// Array indexes correspond to the field names in your db table(s)
+$row = array_values($data['olduserdataofrooms']);
+ 
+fputcsv($csv_file,$row,',','"');
+}
+ 
+fclose($csv_file);     
+
+             $query="START TRANSACTION;"."delete from olduserdataofrooms;insert into olduserdataofrooms select * from newuserdataofrooms;"."COMMIT;";
+             $this->Panel->query($query);
+             exit;
+             }
+         }
+         if(isset($getdata->query['deletenew']))
+        if($getdata->query['deletenew']=="deletenew")
+         {
+            $query="select * from newuserdataofrooms";
+             $result=$this->Panel->query($query);
+            
+              $csv_file = fopen('php://output', 'w');
+$filename = "export_".date("Y.m.d").".csv";
+header('Content-type: application/csv');
+header('Content-Disposition: attachment; filename="'.$filename.'"');
+	
+       
+ foreach($result as $data)
+{
+// Array indexes correspond to the field names in your db table(s)
+$row = array_values($data['newuserdataofrooms']);
+ 
+fputcsv($csv_file,$row,',','"');
+}
+ 
+fclose($csv_file); 
+             $query="START TRANSACTION;"."delete from newuserdataofrooms;"."COMMIT;";
+             $this->Panel->query($query);
+             exit;
+         }                          
+  
+        
+    }
+    
+    
+    }
+  
+?>
