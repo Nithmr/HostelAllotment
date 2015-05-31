@@ -33,6 +33,16 @@ $cakeDescription = __d('cake_dev', 'Online Hostel Allotment');
                 echo $this->Html->css('customcss.css');
 		echo $this->Html->css('bootstrap.css');
 		echo $this->Html->css('bootstrap-theme.css');
+		echo $this->Html->css('metisMenu.min.css');
+		echo $this->Html->css('timeline.css');
+		echo $this->Html->css('sb-admin-2.css');
+		echo $this->Html->css('morris.css');
+		echo $this->Html->css('font-awesome.min.css');
+		echo $this->Html->css('dataTables.bootstrap.css');
+		echo $this->Html->css('dataTables.responsive.css');
+ 		echo $this->Html->script('metisMenu.min.js');
+ 		echo $this->Html->script('jquery.dataTables.min.js');
+ 		echo $this->Html->script('dataTables.bootstrap.min.js');
                 echo $this->Html->script('mapmaster.js');
 		echo $this->Html->script('bootstrap.js');
 		echo $this->Html->script('npm.js');
@@ -698,12 +708,12 @@ function redirect12($abc)
     
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        
+       
             <li><a href="<?php echo $webdirurl ?>/menubar/about/index.html" >About</a></li>
             <li><a href="<?php echo $webdirurl ?>/menubar/rules/rules.html" >Rules</a></li>
             <li><a href="<?php echo $webdirurl ?>/menubar/faq/faq.html" >Faq</a></li>
             <li><a href="#" >Gallery</a></li>
-	<?php echo "<li><a href='$base_url/user/logout'>logout</a></li>" ?>
+	   <?php echo "<li><a href='$base_url/user/logout'>logout</a></li>" ?>
 </ul>
  </div>
   </div>
@@ -713,12 +723,14 @@ function redirect12($abc)
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
+ 		
+                            
                 <li class="sidebar-brand">
                     <a href="#">
-                        Administrator
+                        Start Bootstrap
                     </a>
                 </li>
-                <?php  echo    "<li><a href='$base_url/admin/roomproperties?hostelname=none' >Room-properties</a></li>
+                 <?php  echo    "<li><a href='$base_url/admin/roomproperties?hostelname=none' >Room-properties</a></li>
                                 <li><a href='$base_url/admin/scheduling'>Scheduler</a></li>
                                 
                                 <li><a href='$base_url/admin/addremoverooms?hostelname=none'>rooms</a></li>
@@ -730,13 +742,23 @@ function redirect12($abc)
                                 <li><a href='$base_url/admin/exportdata'>data</a></li>
                        <li><a href='$base_url/admin/validationpage'>validate</a></li>
                                   
-                            </ul></div></div>";
+                            ";
                         
-                     echo $this->fetch('content'); ?>
+                      ?>
             </ul>
         </div> 
   
-          
+          <div id="page-content-wrapper">
+            <div class="container-fluid">
+               
+                    
+                        
+                        <?php  echo $this->fetch('content'); ?>
+                                    </div>
+            
+        </div>
+                   
+                     
                           
                           
                                          

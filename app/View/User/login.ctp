@@ -65,7 +65,7 @@
                                     <!-- Button -->
 
                                     <div class="col-sm-12 controls">
-                                      <input type="submit" value="Log In" />
+                                      <input type="submit" value="Log In" id="clickme"/>
 
                                     </div>
                                 </div>
@@ -75,9 +75,16 @@
                             </form>     
 
 
-<div id="flash-message">
-            	<?php echo $this->Session->flash(); ?>
-                        </div>
+ 
+
+<div   style="display:inline;" id="flash" > 
+  
+ <span ></span>
+<font size="3" color="red"><?php echo $this->Session->flash();  ?></font>
+ </div>
+
+            	
+                        
 
 </fieldset>
     
@@ -86,3 +93,4 @@
     
 
 </div>
+
