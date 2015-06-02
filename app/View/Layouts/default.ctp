@@ -30,7 +30,7 @@ $cakeDescription = __d('cake_dev', 'Online Hostel Allotment');
 		echo $this->Html->meta('icon');
 		
 		
-                echo $this->Html->css('customcss.css');
+                
 		echo $this->Html->css('bootstrap.css');
 		echo $this->Html->css('bootstrap-theme.css');
 		echo $this->Html->css('metisMenu.min.css');
@@ -40,19 +40,18 @@ $cakeDescription = __d('cake_dev', 'Online Hostel Allotment');
 		echo $this->Html->css('font-awesome.min.css');
 		echo $this->Html->css('dataTables.bootstrap.css');
 		echo $this->Html->css('dataTables.responsive.css');
+        echo $this->Html->script('jquery.js');
+        echo $this->Html->script('bootstrap.js');
  		echo $this->Html->script('metisMenu.min.js');
  		echo $this->Html->script('jquery.dataTables.min.js');
  		echo $this->Html->script('dataTables.bootstrap.min.js');
-                echo $this->Html->script('mapmaster.js');
+        
 		echo $this->Html->script('bootstrap.js');
-		echo $this->Html->script('npm.js');
+		
                
-               echo $this->Html->script('jquery.imagemapster.js');
+        
              
-               echo $this->Html->script('jquery.qtip-1.0.0-rc3.min.js');
-
-               
-                 echo $this->Html->script('jquery.qtip-1.0.0-rc3.min.js');
+        
                  
   		echo $this->fetch('meta');
   		echo $this->fetch('css');
@@ -237,10 +236,26 @@ $cakeDescription = __d('cake_dev', 'Online Hostel Allotment');
      if($isLogin && $admin==0)
            {?>
     
-	<div id="main">
-		<?php
-                          echo "<ul class='nav'    >
-                            <li><a href='$base_url/panel/index' >Home</a></li>
+	
+		
+
+
+
+ <div id="main">
+	         
+                  <div id="wrapper" >
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+ 		
+                            
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Start Bootstrap
+                    </a>
+                </li>
+                 <?php  echo    "<li><a href='$base_url/panel/index' >Home</a></li>
                                 <li><a href='$base_url/panel/viewinfo'>Studentinfo</a></li>
                                 <li><a href='$base_url/panel/editinfo'>Edit Password</a></li>
                                 <li><a class='fillchoice$fillchoiceactive' href='$base_url/fillchoice/fillchoice'>fillchoice</a></li>
@@ -248,13 +263,31 @@ $cakeDescription = __d('cake_dev', 'Online Hostel Allotment');
                                 <li><a class='grouping$groupingactive' href='$base_url/grouping/requestnew'>roommate finder</a></li>
                                 <li><a class='fillform$formfill' href='$base_url/userform/filluserinfo'>Fill information</a></li>
                                 <li><a class='fillchoice$fillchoiceactive' href='$base_url/fillchoice/otherstudentpref'>other student pref</a></li>
-                            </ul></div></div>";
-                       
-                       ?>   
+                                  
+                            ";
+                        
+                      ?>
+            </ul>
+        </div> 
+  
+          <div id="page-content-wrapper">
+            <div class="container-fluid">
+               
+                    
+                        
+                        <?php  echo $this->fetch('content'); ?>
+                                    </div>
+            
+        </div>
+
+
+
+            
+                      
                   
                     
            
-                <?php echo $this->fetch('content'); ?>
+               
                 
               
       <div id ="scripts" style='visibility: hidden'></div>
