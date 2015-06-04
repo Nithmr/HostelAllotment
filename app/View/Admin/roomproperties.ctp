@@ -1,5 +1,7 @@
 
 <script type="text/javascript"> 
+  
+    
 
 (function ($) {
   $(document).ready(function(){
@@ -23,6 +25,8 @@
 
 });
   }(jQuery));
+
+
 
 function checkAll(formname, checktoggle)
 {
@@ -88,7 +92,7 @@ foreach($hostellist as $data)
 				$hostel=$data['rooms']['hostel'];
 
 echo "<div id='adminmenu' >
-                <div class='col-lg-3 col-md-6'>" ;
+                <div class='col-lg-3'>" ;
 		
                  echo    "<div class='panel panel-primary'>
                         <div class='panel-heading'>
@@ -201,11 +205,11 @@ Gender:
                         <div class="panel-heading">
                             DataTables Advanced Tables
                         </div>
-<div class="panel-body">
+                        <div class="panel-body">
                             <div class="dataTable_wrapper">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables">
                                     <thead>
-				<tr>
+				<tr class="odd gradeX">
                                             <th>Edit/Check</th>
                                             <th>Room No.</th>
                                             <th>Year</th>
