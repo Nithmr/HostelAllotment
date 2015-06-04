@@ -40,8 +40,8 @@
 }
 
 .centered-form {
-    margin-top: 120px;
-    margin-bottom: 120px;
+    margin-top: 110px;
+    margin-bottom: 110px;
 }
 
 .centered-form .panel {
