@@ -43,7 +43,7 @@ $formaction = "$base_url/admin/scheduling";
 <form method="post" action="<?php echo $base_url ?>/admin/formfillpermission" >
     
                                             <label>Select Roll Number</label>
-                                            <select size="20" multiple class="form-control" name="rollno">
+                                            <select size="20"  class="form-control" name="rollno">
                                                 <option value="all"> ALL </option>
            						 <?php 
            							 foreach($alluser as $data)
@@ -62,3 +62,10 @@ $formaction = "$base_url/admin/scheduling";
 </div>
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+                responsive: true
+        });
+    });
+    </script>

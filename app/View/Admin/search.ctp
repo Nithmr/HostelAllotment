@@ -1,6 +1,13 @@
 
-<?php  echo $this->Html->script('pagination.js');
-  echo $this->Html->css('pagination.css');
+<?php  echo $this->Html->script('jquery.js');
+echo $this->Html->script('metisMenu.min.js');
+echo $this->Html->script('bootstrap.js');
+echo $this->Html->script('jquery.dataTables.min.js');
+echo $this->Html->script('dataTables.bootstrap.min.js');
+echo $this->Html->css('bootstrap.css');
+echo $this->Html->css('dataTables.responsive.css');
+echo $this->Html->css('metisMenu.min.css');
+echo $this->Html->css('sb-admin-2.css');
 
 ?>
 
@@ -36,49 +43,25 @@ for (var i = 0; i < 30; i++)
 
     }
 </script>
-<div id="viewinfocontent">
-    <form method="get" action="<?php echo $base_url ?>/admin/search">
-        <input type="radio" name="searchfield" value="rollno" <?php if($searchfieldval == "rollno" || $searchfieldval=="") echo "checked"; ?>/>ROLLNO
-        <input type="radio" name="searchfield" value="name" <?php if($searchfieldval == "name") echo "checked"; ?>/>NAME
-        <input type="radio" name="searchfield" value="fathername" <?php if($searchfieldval == "fathername") echo "checked"; ?>/>FATHER NAME
-        <input type="radio" name="searchfield" value="mobileno" <?php if($searchfieldval == "mobileno") echo "checked"; ?>/>MOBILE NO.
-        <input type="radio" name="searchfield" value="bloodgroup" <?php if($searchfieldval == "bloodgroup") echo "checked"; ?>/>BLOOD GROUP
-    <input type="text" name="textfield" value="<?php echo $textfieldval; ?>" />
-    <input type="submit" name="search" value="search" /><p />
+<div id="viewinfocontent" class="panel panel-default">
+<div class="panel-heading">
+    Search for Information
+</div><br /><div class="panel panel-body">
+    <form  class="col-lg-3" method="get" action="<?php echo $base_url ?>/admin/search">
+       <input class ="form-control"type="text" name="textfield" value="<?php echo $textfieldval; ?>" />
+    <div class="radio">
+        <br />
+       <label> <input type="radio" name="searchfield" value="rollno" <?php if($searchfieldval == "rollno" || $searchfieldval=="") echo "checked"; ?>/>ROLLNO</label>
+        <label><input type="radio" name="searchfield" value="name" <?php if($searchfieldval == "name") echo "checked"; ?>/>NAME</label>
+        <label><input type="radio" name="searchfield" value="fathername" <?php if($searchfieldval == "fathername") echo "checked"; ?>/>FATHER NAME</label>
+        <label><input type="radio" name="searchfield" value="mobileno" <?php if($searchfieldval == "mobileno") echo "checked"; ?>/>MOBILE NO.</label>
+        <label><input type="radio" name="searchfield" value="bloodgroup" <?php if($searchfieldval == "bloodgroup") echo "checked"; ?>/>BLOOD GROUP</label>
+        </div>
+    
+    <input type="submit" class ="btn btn-default btn-outline" name="search" value="search" /><p />
     </form>
     <input id="bpass" type="button" name="show" value="show-password" onclick="password123()"/>
-    <style>
-    #pageno
-    {
-        text-align: center;
-        margin-left: 20%;
-    }
-   
-    #contenttable
-    {
-        margin-top: 10px;
-        margin-left: 20%;
-    }
-    #contenttable table
-    {
-        border-collapse: collapse;
-    }
-    .validation1
-    {
-        background-color: gray;
-        color: white;
-    }
-     .validation2
-    {
-        background-color: red;
-        color: white;
-    }
-    .validation1 td a
-    {
-        color: white;
-    }
     
-</style>
 <div id="validationdiv">
     <?php if($noofpages!=0){ ?>    
     <div id="pageno">
@@ -100,10 +83,10 @@ for (var i = 0; i < 30; i++)
         
     
    
-    </div>
+    </div></div>
         <?php } ?>
     <div id="contenttable">
-        <table border ="1" width="600px" style="text-align: center;">
+        <table border ="1" width="600px">
             <thead>
                 <tr>
                     <th>
@@ -164,4 +147,5 @@ for (var i = 0; i < 30; i++)
             
         </table>
     </div>
+</div>
 </div>
