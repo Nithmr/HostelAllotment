@@ -1,30 +1,47 @@
-CakePHP is a rapid development framework for PHP which uses commonly known design patterns like Active Record, Association Data Mapping, Front Controller and MVC. Our primary goal is to provide a structured framework that enables PHP users at all levels to rapidly develop robust web applications, without any loss to flexibility.
+# HostelAllotment
 
-The Cake Software Foundation - promoting development related to CakePHP
-http://cakefoundation.org/
+[![Build Status](https://travis-ci.org/MayMeow/uuid.svg?branch=master)](https://travis-ci.org/MayMeow/uuid)
 
-CakePHP - the rapid development PHP framework
-http://www.cakephp.org
+Simple library to generating RFC 4122 version 3,4 and 5 UUID (Universaly Unique Identifier).
 
-Cookbook - user documentation for learning about CakePHP
-http://book.cakephp.org
+From [Wikipedia](https://en.wikipedia.org/wiki/Universally_unique_identifier):A universally unique identifier (UUID) is a 128-bit number used to identify information in computer systems. Microsoft uses the term globally unique identifier (GUID), either as a synonym for UUID or to refer to a particular UUID variant.
 
-API - quick reference to CakePHP
-http://api.cakephp.org
+## Requirements
 
-The Bakery - everything CakePHP
-http://bakery.cakephp.org
+* HTTP Server. For example: Apache. mod_rewrite is preferred, but by no means required.
+* PHP 5.3.0 or greater
 
-The Show - live and archived podcasts about CakePHP and more
-http://live.cakephp.org
+One of following database engines:
 
-CakePHP TV - screen casts from events and video tutorials
-http://tv.cakephp.org
-
-CakePHP Google Group - community mailing list and forum
-http://groups.google.com/group/cake-php
+* MySQL (4 or greater)
+* PostgreSQL
+* Microsoft SQL Server
+* SQLite
 
 
-bla bla bla
+## Installation
 
-Join the chat at https://gitter.im/Nithmr/HostelAllotment
+* Update your database wit given sql files
+* Copy soruce code on your server and change database server configuration file ```app/Config/database.php```
+
+
+## Usage
+
+Open your favorite browser and navigate to http://your-server.url
+
+
+## Contributing
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request.
+
+## Credits
+
+[Nithmr](https://github.com/Nithmr)
+
+## License
+
+```todo``` license
