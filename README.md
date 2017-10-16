@@ -17,9 +17,17 @@ One of following database engines:
 
 ## Installation
 
-* Update your database wit given sql files
-* Copy soruce code on your server and change database server configuration file ```app/Config/database.php```
+* Clone soruce code `git clone https://github.com/Nithmr/HostelAllotment.git`
+* `cd HostelAllotment`
+* Update database server configuration file ```app/Config/database.php```
 
+### Running on your computer
+
+If you want to use project on your computer continue with following steps otherwise you can skip to __Usage__
+
+* `cd HostelAllotment`
+* `php -S localhost:8181`
+* Open your favorite browser and navigate to `http://localhost:8181`
 
 ## Usage
 
