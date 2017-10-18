@@ -1,9 +1,7 @@
 # HostelAllotment
-
 This is an application that is developed using CAKEPHP which is used to allocate hostel room to students. 
 
 ## Requirements
-
 * HTTP Server. For example: Apache. mod_rewrite is preferred, but by no means required.
 * PHP 5.4.0 or greater
 
@@ -16,7 +14,6 @@ And also have a database server running.
 
 
 ## Installation
-
 - Clone the repository using `git clone https://github.com/Nithmr/HostelAllotment.git`
 - Navigate to the project folder `cd HostelAllotment`
 - Also, make sure the `/app/tmp` directory in your cake installation is writable by the web server user
@@ -27,21 +24,17 @@ And also have a database server running.
 
 
 ## Usage
-
 Visit `http://localhost:8000` on your browser to view the application
 
 
 ## Contributing
-
 1. Fork the repository
 2. Clone your forked repository and update your changes.
 3. Submit a pull request from your forked repository against our repository.
 
 
 ## Credits
-
 [Nithmr](https://github.com/Nithmr)
 
 ## License
-
-```todo``` license
+[Apache 2.o](https://github.com/Nithmr/HostelAllotment/blob/master/LICENSE)
